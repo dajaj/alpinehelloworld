@@ -32,7 +32,7 @@ pipeline {
             script {
               sh '''
                 docker rm -f ${IMAGE_NAME}
-                docker run -d -p 80:5000 -e PORT=5000 --name ${IMAGE_NAME} ${CONTAINER_IMAGE} 
+                docker run -d -p 8085:5000 -e PORT=5000 --name ${IMAGE_NAME} ${CONTAINER_IMAGE} 
                 sleep 5
               '''
              }
@@ -43,7 +43,7 @@ pipeline {
            steps {
               script {
                 sh '''
-                   curl http://172.17.0.1 | grep -q "Hello world!"
+                   curl http://172.17.0.1:8085 | grep -q "Hello world!"
                 '''
               }
            }
