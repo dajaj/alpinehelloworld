@@ -22,7 +22,7 @@ pipeline {
            agent any
            steps {
               script {
-                sh 'docker build -t ${DOCKERHUB_ID}/${IMAGE_NAME}:${IMAGE_TAG} .'
+                sh 'docker build -t ${CONTAINER_IMAGE} .'
               }
            }
        }
@@ -32,7 +32,7 @@ pipeline {
             script {
               sh '''
                 docker rm -f ${IMAGE_NAME}
-                docker run -d -p 80:5000 -e PORT=5000 --name ${IMAGE_NAME} ${DOCKERHUB_ID}/${IMAGE_NAME}:${IMAGE_TAG} 
+                docker run -d -p 80:5000 -e PORT=5000 --name ${IMAGE_NAME} ${CONTAINER_IMAGE} 
                 sleep 5
               '''
              }
@@ -66,7 +66,7 @@ pipeline {
              script {
                sh '''
                   echo $DOCKERHUB_PASSWORD_PSW | docker login -u $DOCKERHUB_PASSWORD_USR --password-stdin
-                  docker push ${DOCKERHUB_ID}/$IMAGE_NAME:$IMAGE_TAG
+                  docker push ${CONTAINER_IMAGE}
                '''
              }
           }
