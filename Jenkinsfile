@@ -31,7 +31,6 @@ pipeline {
           steps {
             script {
               sh '''
-                docker rm -f ${IMAGE_NAME}
                 docker run -d -p 80:5000 -e PORT=5000 --name ${IMAGE_NAME} ${CONTAINER_IMAGE} 
                 sleep 5
               '''
